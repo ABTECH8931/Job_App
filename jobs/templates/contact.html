@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Custom styles that enhance Bootstrap */
+    .contact-card {
+        max-width: 800px;
+        margin: 2rem auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border: none;
+    }
+    .contact-header {
+        border-radius: 10px 10px 0 0 !important;
+        padding: 1.5rem;
+    }
+    .contact-body {
+        padding: 2rem;
+    }
+    .btn-contact {
+        padding: 0.5rem 1.5rem;
+        transition: all 0.3s ease;
+    }
+    .btn-contact:hover {
+        transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+        .contact-buttons {
+            flex-direction: column;
+        }
+        .btn-contact {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
+
+<div class="container py-5">
+    <div class="card contact-card">
+        <div class="card-header contact-header bg-primary text-white">
+            <h2 class="text-center mb-0">Contact Us</h2>
+        </div>
+        <div class="card-body contact-body">
+            <form id="contactForm">
+                <div class="mb-3">
+                    <label class="form-label">Your Name</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-control" name="email" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Subject</label>
+                    <input type="text" class="form-control" name="subject" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-control" name="message" rows="5" required></textarea>
+                </div>
+                
+                <div class="d-flex contact-buttons justify-content-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-contact me-2">
+                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                    </button>
+                    <a href="mailto:abrahamefe307@gmail.com" class="btn btn-secondary btn-contact">
+                        <i class="fas fa-envelope me-2"></i>Email Directly
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const subject = formData.get('subject');
+    const message = formData.get('message');
+    
+    window.location.href = `mailto:abrahamefe307@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+    )}`;
+});
+</script>
+{% endblock %}

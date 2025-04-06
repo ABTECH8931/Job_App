@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ job_seeker.full_name }}'s Profile | JobConnect{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">{{ job_seeker.full_name }}'s Profile</h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong class="d-block mb-1">Full Name:</strong>
+                        <span>{{ job_seeker.full_name }}</span>
+                    </div>
+                    <div class="mb-3">
+                        <strong class="d-block mb-1">Bio:</strong>
+                        <span>{{ job_seeker.bio|default:"No bio provided."|linebreaksbr }}</span>
+                    </div>
+                    <div class="mb-3">
+                        <strong class="d-block mb-1">Location:</strong>
+                        <span>{{ job_seeker.location }}</span>
+                    </div>
+                    <div class="mb-3">
+                        <strong class="d-block mb-1">Phone:</strong>
+                        <span>{{ job_seeker.phone }}</span>
+                    </div>
+                    <div class="mb-3">
+                        <strong class="d-block mb-1">Skills:</strong>
+                        <span>{{ job_seeker.skills|default:"No skills provided."|linebreaksbr }}</span>
+                    </div>
+                    <div class="mb-3">
+                        <strong class="d-block mb-1">Username:</strong>
+                        <span>{{ job_seeker.user.username }}</span>
+                    </div>
+                    <div class="mb-3">
+                        <strong class="d-block mb-1">Email:</strong>
+                        <span>{{ job_seeker.user.email }}</span>
+                    </div>
+                    {# Add other profile information as needed #}
+                </div>
+                <div class="card-footer bg-light">
+                    {% if job_id %}
+                        <a href="{% url 'view_applications' job_id %}" class="btn btn-secondary">Back to Applications</a>
+                    {% else %}
+                        <a href="{% url 'employer_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+{% endblock %}

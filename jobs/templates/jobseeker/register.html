@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Jobseeker Registration | JobConnect{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary: #007bff; /* Updated primary color */
+        --primary-dark: #0056b3;
+        --secondary: #6c757d;
+        --light: #f8f9fa;
+        --dark: #343a40;
+        --success: #28a745;
+        --info: #17a2b8;
+        --warning: #ffc107;
+        --danger: #dc3545;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+        color: var(--dark);
+        line-height: 1.6;
+        background-color: var(--light);
+    }
+
+    .register-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Ensure full height */
+        background-color: #f0f2f5; /* Light background */
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: 400px;
+        margin: 2rem;
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08);
+    }
+
+    .register-card-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .register-card-header h2 {
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: var(--primary);
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .btn-register {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .btn-register {
+        color: #fff;
+        background-color: var(--success); /* Using a different color for jobseeker registration */
+        border-color: var(--success);
+    }
+
+    .btn-register:hover {
+        color: #fff;
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+
+    .mt-3 {
+        margin-top: 1.5rem;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .alert {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+</style>
+
+<div class="register-container">
+    <div class="register-card">
+        <div class="register-card-header">
+            <h2>Jobseeker Registration</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ user_form|crispy }}
+                {{ profile_form|crispy }}
+                <button type="submit" class="btn btn-register">Register as Jobseeker</button>
+                <p class="mt-3 text-center">
+                    Already have an account? <a href="{% url 'jobseeker_login' %}">Log in as Jobseeker</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

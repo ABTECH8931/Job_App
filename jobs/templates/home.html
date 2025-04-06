@@ -1,0 +1,728 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Base Styles */
+    :root {
+        --primary: #4361ee;
+        --primary-dark: #3a0ca3;
+        --secondary: #f72585;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --gray: #6c757d;
+        --light-gray: #e9ecef;
+        --white: #ffffff;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        color: var(--dark);
+        line-height: 1.6;
+        background-color: var(--light);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* Hero Section - Restyled */
+    .hero-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 120px 0 80px;
+        position: relative;
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        color: var(--dark);
+    }
+
+    .hero-content h1 span {
+        color: var(--dark);
+        font-weight: 900;
+    }
+
+    .hero-content p {
+        font-size: 1.25rem;
+        color: var(--gray);
+        margin-bottom: 2rem;
+    }
+
+    .hero-image {
+        transition: transform 0.3s ease;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .hero-image:hover {
+        transform: scale(1.02);
+    }
+
+    .hero-search-box {
+        background: var(--white);
+        border-radius: 50px;
+        padding: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--light-gray);
+        max-width: 600px;
+    }
+
+    .hero-search-icon {
+        padding: 0 15px;
+        color: var(--gray);
+    }
+
+    .hero-search-input {
+        border: none;
+        outline: none;
+        box-shadow: none;
+        padding: 10px 0;
+        width: 100%;
+    }
+
+    /* Section Titles */
+    .section-title {
+        font-weight: 700;
+        position: relative;
+        display: inline-block;
+        margin-bottom: 2rem;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        width: 50px;
+        height: 4px;
+        background: var(--primary);
+        border-radius: 2px;
+    }
+
+    /* Job Cards */
+    .card {
+        border: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        background-color: var(--white);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .company-logo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--primary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    .job-tags span {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-right: 8px;
+    }
+
+    .job-type {
+        background-color: rgba(67, 97, 238, 0.1);
+        color: var(--primary);
+    }
+
+    .job-salary {
+        background-color: rgba(247, 37, 133, 0.1);
+        color: var(--secondary);
+    }
+
+    .job-link {
+        color: var(--primary);
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .job-link:hover {
+        color: var(--primary-dark);
+    }
+
+    /* How It Works Section */
+    .process-card {
+        border: none;
+        text-align: center;
+        padding: 30px 20px;
+        transition: all 0.3s ease;
+        background-color: var(--white);
+    }
+
+    .process-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .process-icon {
+        position: relative;
+        margin: 0 auto 25px;
+        width: 80px;
+        height: 80px;
+    }
+
+    .icon-circle {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: rgba(67, 97, 238, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        font-size: 1.5rem;
+    }
+
+    .step-number {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        width: 30px;
+        height: 30px;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    /* Stats Section */
+    .stats-section {
+        background-color: var(--light);
+        padding: 80px 0;
+    }
+
+    .stat-card {
+        text-align: center;
+        padding: 40px 20px;
+        border: none;
+        background-color: var(--white);
+    }
+
+    .stat-value {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+        color: var(--gray);
+    }
+
+    .stat-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        opacity: 0.1;
+        color: var(--primary);
+        font-size: 3rem;
+    }
+
+    /* Testimonials Section */
+    .testimonial-card {
+        border: none;
+        padding: 30px;
+        position: relative;
+        background-color: var(--white);
+    }
+
+    .testimonial-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .quote-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        opacity: 0.1;
+        color: var(--primary);
+        font-size: 3rem;
+    }
+
+    .testimonial-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+    }
+
+    .author-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--light-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: var(--primary);
+    }
+
+    .author-name {
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+
+    .author-role {
+        color: var(--gray);
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 80px 0;
+    }
+
+    .cta-card {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        border-radius: 12px;
+        padding: 60px;
+        color: white;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(67, 97, 238, 0.3);
+    }
+
+    .cta-title {
+        font-weight: 700;
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+    }
+
+    .cta-text {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        border-radius: 12px;
+        background-color: var(--white);
+    }
+
+    .empty-state svg {
+        color: var(--gray);
+        margin-bottom: 20px;
+    }
+
+    /* Buttons */
+    .btn {
+        font-weight: 500;
+        padding: 10px 24px;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--primary-dark);
+        border-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+    }
+
+    .btn-outline-primary {
+        color: var(--primary);
+        border-color: var(--primary);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        color: white;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero-image {
+            margin-top: 40px;
+        }
+
+        .cta-card {
+            padding: 40px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 80px 0;
+        }
+
+        .hero-content h1 {
+            font-size: 2rem;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+        }
+
+        .cta-card {
+            padding: 30px 20px;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero-search-box {
+            display: none; /* Hide the search box on mobile devices */
+            /* flex-direction: column;
+            background: transparent;
+            box-shadow: none;
+            border: none;
+            padding: 0;
+            max-width: 90%;
+            margin: 0 auto; */
+        }
+
+        .hero-search-box .btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px 16px;
+            font-size: 0.9rem;
+        }
+
+        .hero-search-input {
+            background: white;
+            border-radius: 50px;
+            padding: 10px 16px;
+            margin-bottom: 10px;
+            border: 1px solid var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        .d-flex.gap-3 {
+            flex-direction: column;
+            gap: 15px !important;
+        }
+
+        .btn-lg {
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            padding: 12px 20px;
+        }
+    }
+</style>
+
+    <section class="hero-section">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeInUp"><span>Discover</span> Your Next Career Move</h1>
+                    <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">Connect with innovative companies and opportunities that align with your career goals.</p>
+                    <div class="d-flex gap-3 animate__animated animate__fadeInUp animate__delay-2s">
+                        <a href="{% url 'job_list' %}" class="btn btn-primary btn-lg rounded-pill px-4">Explore Jobs</a>
+                        <a href="{% url 'jobseeker_register' %}" class="btn btn-outline-primary btn-lg rounded-pill px-4">Join Now</a>
+                    </div>
+                    <div class="hero-search-box mt-4 animate__animated animate__fadeInUp animate__delay-3s">
+                        <form action="{% url 'job_list' %}" method="get" class="d-flex align-items-center">
+                            <div class="hero-search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                            </div>
+                            <input type="text" name="query" placeholder="Job title, keyword, or company" class="form-control border-0 hero-search-input">
+                            <button type="submit" class="btn btn-primary rounded-pill px-4">Search</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block animate__animated animate__fadeInRight">
+                    <img src="{% static 'images/hero-job.png' %}" alt="Professional working at computer" class="img-fluid hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="my-5 py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="section-title">Featured Opportunities</h2>
+                <a href="{% url 'job_list' %}" class="text-decoration-none">View all <i class="bi bi-arrow-right"></i></a>
+            </div>
+            <div class="row g-4">
+                {% for job in featured_jobs %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 animate__animated animate__fadeInUp shadow-sm" style="animation-delay: {{ forloop.counter|divisibleby:3 }}00ms">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="company-logo me-3">
+                                        <div class="logo-placeholder">{{ job.employer.company_name|slice:":1" }}</div>
+                                    </div>
+                                    <div>
+                                        <h5 class="card-title mb-1">{{ job.title }}</h5>
+                                        <p class="card-subtitle mb-2 text-muted">{{ job.employer.company_name }}</p>
+                                    </div>
+                                </div>
+                                <p class="card-text">{{ job.description|truncatechars:100 }}</p>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <div class="d-flex job-tags">
+                                        <span class="job-type">{{ job.job_type }}</span>
+                                        <span class="job-salary">{{ job.salary }}</span>
+                                    </div>
+                                    <a href="{% url 'job_detail' job.id %}" class="job-link">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center py-5">
+                        <div class="empty-state shadow-sm rounded">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
+                            </svg>
+                            <p class="mt-3">No featured jobs available at the moment.</p>
+                            <a href="{% url 'job_list' %}" class="btn btn-outline-primary rounded-pill mt-2">Browse All Jobs</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="py-5 my-5 how-it-works-section">
+            <h2 class="section-title text-center mb-5">How JobConnect Works</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card process-card h-100 animate__animated animate__fadeInUp shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="process-icon">
+                                <div class="icon-circle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                </div>
+                                <div class="step-number">1</div>
+                            </div>
+                            <h4 class="card-title">Discover Opportunities</h4>
+                            <p class="card-text">Browse thousands of curated job listings from top employers across various industries and locations.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card process-card h-100 animate__animated animate__fadeInUp animate__delay-1s shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="process-icon">
+                                <div class="icon-circle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                                        <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                                        <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                    </svg>
+                                </div>
+                                <div class="step-number">2</div>
+                            </div>
+                            <h4 class="card-title">Apply Seamlessly</h4>
+                            <p class="card-text">Submit applications with just a few clicks, track your status, and receive notifications about your applications.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card process-card h-100 animate__animated animate__fadeInUp animate__delay-2s shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="process-icon">
+                                <div class="icon-circle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                        <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
+                                    </svg>
+                                </div>
+                                <div class="step-number">3</div>
+                            </div>
+                            <h4 class="card-title">Land Your Dream Job</h4>
+                            <p class="card-text">Connect directly with employers, schedule interviews, and start your journey with your ideal company.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5 my-5 stats-section">
+            <h2 class="section-title text-center mb-5">JobConnect by the Numbers</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card stat-card h-100 animate__animated animate__fadeInUp shadow-sm">
+                        <div class="card-body text-center position-relative">
+                            <div class="stat-value counter">{{ job_count }}</div>
+                            <div class="stat-label">Active Jobs</div>
+                            <div class="stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card stat-card h-100 animate__animated animate__fadeInUp animate__delay-1s shadow-sm">
+                        <div class="card-body text-center position-relative">
+                            <div class="stat-value counter">{{ jobseeker_count }}</div>
+                            <div class="stat-label">Job Seekers</div>
+                            <div class="stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                                    <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card stat-card h-100 animate__animated animate__fadeInUp animate__delay-2s shadow-sm">
+                        <div class="card-body text-center position-relative">
+                            <div class="stat-value counter">{{ employer_count }}</div>
+                            <div class="stat-label">Companies</div>
+                            <div class="stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+                                    <path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-10Zm.5.5v1h1v-1h-1Zm2 0v1h1v-1h-1Zm2 0v1h1v-1h-1Zm2 0v1h1v-1h-1Zm-6 2v1h1v-1h-1Zm2 0v1h1v-1h-1Zm2 0v1h1v-1h-1Zm2 0v1h1v-1h-1Zm-6 2v1h1v-1h-1Zm2 0v1h1v-1h-1Zm2 0v1h1v-1h-1Zm2 0v1h1v-1h-1Zm-6 2v1h1v-1h-1Zm2 0v1h1v-1h-1Zm2 0v1h1v-1h-1Zm2 0v1h1v-1h-1Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5 my-5 testimonials-section">
+            <h2 class="section-title text-center mb-5">Success Stories</h2>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card testimonial-card h-100 animate__animated animate__fadeInUp shadow-sm">
+                        <div class="card-body testimonial-content">
+                            <div class="quote-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-quote" viewBox="0 0 16 16">
+                                    <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-.1054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-.1054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z"/>
+                                </svg>
+                            </div>
+                            <p class="card-text testimonial-text">"JobConnect made it incredibly easy to find my dream job. Within two weeks of creating my profile, I received multiple interview requests and landed a position that perfectly matches my skills."</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                    </svg>
+                                </div>
+                                <div class="author-info">
+                                    <h5 class="author-name">Sarah Johnson</h5>
+                                    <p class="author-role">Software Developer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card testimonial-card h-100 animate__animated animate__fadeInUp animate__delay-1s shadow-sm">
+                        <div class="card-body testimonial-content">
+                            <div class="quote-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-quote" viewBox="0 0 16 16">
+                                    <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-.1054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z"/>
+                                </svg>
+                            </div>
+                            <p class="card-text testimonial-text">"As someone looking to transition careers, JobConnect provided the tools and connections I needed. The platform's intuitive design made the job search process simple and effective."</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                    </svg>
+                                </div>
+                                <div class="author-info">
+                                    <h5 class="author-name">Michael Chen</h5>
+                                    <p class="author-role">Marketing Specialist</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5 py-5 cta-section">
+            <div class="cta-card animate__animated animate__fadeInUp">
+                <div class="cta-content text-center">
+                    <h2 class="cta-title mb-4">Ready to Start Your Journey?</h2>
+                    <p class="cta-text mb-4">Join thousands of job seekers who found their dream careers with JobConnect.</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{% url 'jobseeker_register' %}" class="btn btn-primary btn-lg rounded-pill px-4">Sign Up Now</a>
+                        <a href="{% url 'job_list' %}" class="btn btn-outline-light btn-lg rounded-pill px-4">Browse Jobs</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Animation for elements on scroll
+const animatedElements = document.querySelectorAll('.animate__animated');
+
+// Only start animations when elements come into view
+const animationObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        // Add the class that triggers animation when element is visible
+        if (entry.isIntersecting) {
+            // If it has a delay class already, keep it
+            if (!entry.target.classList.contains('animate__fadeIn')) {
+                // For elements without specific animation class, add the fade in
+                if (!entry.target.classList.contains('animate__fadeInUp') &&
+                    !entry.target.classList.contains('animate__fadeInDown') &&
+                    !entry.target.classList.contains('animate__fadeInLeft') &&
+                    !entry.target.classList.contains('animate__fadeInRight')) {
+                    entry.target.classList.add('animate__fadeIn');
+                }
+            }
+            // Once we've animated, no need to keep observing
+            animationObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.2 }); // Start animation when 20% of the element is visible
+
+// Observe each animated element
+animatedElements.forEach(element => {
+    animationObserver.observe(element);
+});
+</script>
+{% endblock %}

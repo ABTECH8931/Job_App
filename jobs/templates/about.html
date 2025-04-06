@@ -1,0 +1,328 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* About Page Styles */
+    .about-hero {
+        background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+    }
+
+    .about-hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .about-hero p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .mission-section {
+        padding: 80px 0;
+        background-color: #f8f9fa;
+    }
+
+    .mission-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 50px;
+    }
+
+    .mission-text {
+        flex: 1;
+    }
+
+    .mission-image {
+        flex: 1;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .mission-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: #4361ee;
+    }
+
+    .team-section {
+        padding: 80px 0;
+    }
+
+    .team-members {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    .team-member {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .team-member:hover {
+        transform: translateY(-10px);
+    }
+
+    .member-image {
+        height: 250px;
+        overflow: hidden;
+    }
+
+    .member-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .member-info {
+        padding: 25px;
+        text-align: center;
+    }
+
+    .member-name {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .member-role {
+        color: #6c757d;
+        margin-bottom: 15px;
+    }
+
+    .stats-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
+        color: white;
+    }
+
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        text-align: center;
+    }
+
+    .stat-item {
+        padding: 30px;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+    }
+
+    .values-section {
+        padding: 80px 0;
+    }
+
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    .value-card {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        text-align: center;
+    }
+
+    .value-icon {
+        width: 70px;
+        height: 70px;
+        background-color: rgba(67, 97, 238, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: #4361ee;
+        font-size: 1.8rem;
+    }
+
+    .value-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .mission-content {
+            flex-direction: column;
+        }
+        
+        .about-hero h1 {
+            font-size: 2.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="about-hero">
+    <div class="container">
+        <h1>About JobConnect</h1>
+        <p>{{ description }}</p>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section class="mission-section">
+    <div class="container">
+        <div class="mission-content">
+            <div class="mission-text">
+                <h2 class="section-title">Our Mission</h2>
+                <p>At JobConnect, we're revolutionizing the way people find jobs and companies find talent. Our mission is to create meaningful connections that empower both job seekers and employers to achieve their goals.</p>
+                <p>Founded in 2023, we've helped thousands of professionals find their dream jobs and assisted hundreds of companies in building their dream teams.</p>
+                <p>We believe that the right job can transform lives, and the right talent can transform businesses. That's why we've built a platform that makes the job search process simple, efficient, and rewarding for everyone involved.</p>
+            </div>
+            <div class="mission-image">
+                <img src="{% static 'images/about.png' %}" alt="Our team working together">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section">
+    <div class="container">
+        <h2 class="section-title text-center">Meet Our Team</h2>
+        <div class="team-members">
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="{% static 'images/about-team1.jpg' %}" alt="Team member">
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">Sarah Johnson</h3>
+                    <p class="member-role">CEO & Founder</p>
+                    <p>With 15 years in the recruitment industry, Sarah founded JobConnect to solve the pain points she observed in traditional hiring.</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="{% static 'images/about-team.jpeg' %}" alt="Team member">
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">Michael Chen</h3>
+                    <p class="member-role">CTO</p>
+                    <p>Michael leads our technology team, ensuring JobConnect's platform delivers a seamless experience for all users.</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="{% static 'images/about-team.jpeg' %}" alt="Team member">
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">David Wilson</h3>
+                    <p class="member-role">Head of Customer Success</p>
+                    <p>David and his team ensure every JobConnect user gets the support they need throughout their journey.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">10,000+</div>
+                <div class="stat-label">Jobs Posted</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">5,000+</div>
+                <div class="stat-label">Successful Hires</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Partner Companies</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Satisfaction Rate</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values Section -->
+<section class="values-section">
+    <div class="container">
+        <h2 class="section-title text-center">Our Core Values</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+                <h3 class="value-title">People First</h3>
+                <p>We prioritize the needs and aspirations of both job seekers and employers, creating win-win solutions.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-lightbulb"></i>
+                </div>
+                <h3 class="value-title">Innovation</h3>
+                <p>We constantly evolve our platform to incorporate the latest technologies and best practices in recruitment.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <h3 class="value-title">Integrity</h3>
+                <p>We maintain transparency and honesty in all our interactions and operations.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-globe"></i>
+                </div>
+                <h3 class="value-title">Accessibility</h3>
+                <p>We believe everyone deserves equal opportunity to find meaningful employment.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,384 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ job.title }} - JobConnect{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary: #007bff; /* Updated primary color */
+        --primary-dark: #0056b3;
+        --secondary: #6c757d;
+        --light: #f8f9fa;
+        --dark: #343a40;
+        --success: #28a745;
+        --info: #17a2b8;
+        --warning: #ffc107;
+        --danger: #dc3545;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+        color: var(--dark);
+        line-height: 1.6;
+        background-color: var(--light);
+    }
+
+    .job-detail-container {
+        padding: 1rem; /* Reduced padding for mobile */
+        background-color: #f0f2f5; /* Light background */
+    }
+
+    .job-detail-card {
+        background-color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08);
+        margin-bottom: 1rem; /* Reduced margin for mobile */
+    }
+
+    .job-detail-header {
+        padding: 1rem; /* Reduced padding for mobile */
+        border-bottom: 1px solid #dee2e6;
+        text-align: center; /* Center the header content on mobile */
+    }
+
+    .job-title {
+        color: var(--primary);
+        margin-bottom: 0.3rem; /* Reduced margin for mobile */
+        font-size: 1.5rem; /* Smaller font size for mobile */
+    }
+
+    .company-name {
+        color: var(--secondary);
+        display: block;
+        margin-bottom: 0.5rem; /* Reduced margin for mobile */
+        font-size: 1rem; /* Smaller font size for mobile */
+    }
+
+    .job-meta {
+        margin-bottom: 0.5rem; /* Reduced margin for mobile */
+    }
+
+    .meta-item {
+        display: block; /* Stack meta items on mobile */
+        margin-right: 0;
+        margin-bottom: 0.3rem; /* Add spacing between stacked items */
+        color: var(--info);
+        font-size: 0.85rem; /* Smaller font size for mobile */
+    }
+
+    .meta-item i {
+        margin-right: 0.3rem;
+    }
+
+    .badge {
+        font-size: 0.7rem; /* Smaller font size for mobile */
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.25rem;
+        margin-top: 0.5rem; /* Add some space above the badge */
+    }
+
+    .job-content {
+        padding: 1rem; /* Reduced padding for mobile */
+        display: flex;
+        flex-direction: column; /* Stack content on mobile */
+        gap: 1rem; /* Reduced gap for mobile */
+    }
+
+    .job-description, .job-sidebar {
+        flex: 0 0 100%; /* Take full width on mobile */
+    }
+
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--primary-dark);
+        padding-bottom: 0.3rem; /* Reduced padding for mobile */
+        margin-bottom: 0.8rem; /* Reduced margin for mobile */
+        font-size: 1.2rem; /* Smaller font size for mobile */
+    }
+
+    .job-actions {
+        margin-top: 1rem; /* Reduced margin for mobile */
+        text-align: center; /* Center buttons on mobile */
+    }
+
+    .job-actions .btn {
+        margin-right: 0;
+        margin-bottom: 0.5rem; /* Add spacing between buttons */
+        display: block; /* Make buttons full width on mobile */
+        width: 100%;
+    }
+
+    .company-links {
+        margin-top: 1rem; /* Reduced margin for mobile */
+    }
+
+    .similar-jobs {
+        margin-top: 1.5rem; /* Reduced margin for mobile */
+    }
+
+    .similar-jobs .row {
+        flex-direction: column; /* Stack similar jobs on mobile */
+    }
+
+    .similar-jobs .col-md-6 {
+        width: 100%; /* Make similar job cards full width on mobile */
+    }
+
+    .similar-job-card {
+        background-color: #fff;
+        border: 1px solid #eee;
+        border-radius: 0.25rem;
+        padding: 1rem; /* Reduced padding for mobile */
+        margin-bottom: 1rem; /* Reduced margin for mobile */
+    }
+
+    .similar-job-title {
+        font-size: 1rem; /* Smaller font size for mobile */
+        margin-bottom: 0.2rem; /* Reduced margin for mobile */
+    }
+
+    .similar-job-company {
+        color: var(--secondary);
+        font-size: 0.8rem; /* Smaller font size for mobile */
+        margin-bottom: 0.3rem; /* Reduced margin for mobile */
+    }
+
+    .d-flex.gap-2.mb-2 {
+        flex-direction: row; /* Keep badges in a row on mobile if space allows */
+        align-items: center; /* Align badges vertically */
+    }
+
+    .d-flex.gap-2.mb-2 .badge {
+        font-size: 0.7rem; /* Ensure badge text fits */
+    }
+
+    /* Media query for larger screens (min-width: 768px) */
+    @media (min-width: 768px) {
+        .job-detail-container {
+            padding: 2rem;
+        }
+
+        .job-detail-card {
+            margin-bottom: 1.5rem;
+        }
+
+        .job-detail-header {
+            padding: 1.5rem;
+            text-align: left; /* Align header content to the left on larger screens */
+        }
+
+        .job-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .company-name {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-meta {
+            margin-bottom: 1rem;
+        }
+
+        .meta-item {
+            display: inline-block; /* Display meta items inline on larger screens */
+            margin-right: 1rem;
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+
+        .badge {
+            font-size: 0.8rem;
+            margin-top: 0;
+        }
+
+        .job-content {
+            padding: 1.5rem;
+            flex-direction: row; /* Keep content side-by-side on larger screens */
+            gap: 2rem;
+        }
+
+        .job-description, .job-sidebar {
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-actions {
+            margin-top: 1.5rem;
+            text-align: left; /* Align buttons to the left on larger screens */
+        }
+
+        .job-actions .btn {
+            display: inline-block; /* Display buttons inline on larger screens */
+            width: auto;
+            margin-right: 0.5rem;
+            margin-bottom: 0;
+        }
+
+        .similar-jobs .row {
+            flex-direction: row; /* Keep similar jobs in a row on larger screens */
+        }
+
+        .similar-jobs .col-md-6 {
+            width: 50%; /* Show two similar jobs per row on medium screens and up */
+        }
+
+        .similar-job-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .similar-job-company {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
+
+<div class="job-detail-container">
+    <div class="job-detail-card">
+        <div class="job-detail-header">
+            <h1 class="job-title">{{ job.title }}</h1>
+            <span class="company-name">{{ job.employer.company_name }}</span>
+
+            <div class="job-meta">
+                <span class="meta-item">
+                    <i class="bi bi-geo-alt"></i>
+                    {{ job.location }}
+                </span>
+                <span class="meta-item">
+                    <i class="bi bi-briefcase"></i>
+                    {{ job.get_job_type_display }}
+                </span>
+                <span class="meta-item">
+                    <i class="bi bi-cash"></i>
+                    {{ job.salary }}
+                </span>
+                <span class="meta-item">
+                    <i class="bi bi-clock"></i>
+                    Posted {{ job.date_posted|timesince }} ago
+                </span>
+            </div>
+
+            <span class="badge bg-primary">{{ job.category }}</span>
+        </div>
+
+        <div class="job-content">
+            <div class="job-description">
+                <h3 class="section-title">Job Description</h3>
+                <div class="job-description-content">
+                    {{ job.description|linebreaks }}
+                </div>
+
+                <h3 class="section-title">Requirements</h3>
+                <div class="job-requirements">
+                    {{ job.requirements|linebreaks }}
+                </div>
+
+                {% if request.user.is_authenticated and request.user.jobseeker %}
+                    <div class="job-actions">
+                        {% if has_applied %}
+                            <button class="btn btn-success" disabled>
+                                <i class="bi bi-check-circle"></i> Already Applied
+                            </button>
+                        {% else %}
+                            <a href="{% url 'apply_job' job.id %}" class="btn btn-primary">
+                                <i class="bi bi-send"></i> Apply Now
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'job_list' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Back to Jobs
+                        </a>
+                    </div>
+                {% elif not request.user.is_authenticated %}
+                    <div class="job-actions">
+                        <a href="{% url 'login' %}?next={% url 'job_detail' job.id %}" class="btn btn-primary">
+                            <i class="bi bi-box-arrow-in-right"></i> Login to Apply
+                        </a>
+                        <a href="{% url 'jobseeker_register' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-person-plus"></i> Register
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="job-sidebar">
+                <h3 class="section-title">Job Overview</h3>
+                <div class="job-overview">
+                    <div class="mb-4">
+                        <h5 class="fw-semibold mb-2">Company</h5>
+                        <p>{{ job.employer.company_name }}</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="fw-semibold mb-2">Location</h5>
+                        <p>{{ job.location }}</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="fw-semibold mb-2">Job Type</h5>
+                        <p>{{ job.get_job_type_display }}</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="fw-semibold mb-2">Salary</h5>
+                        <p>{{ job.salary }}</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="fw-semibold mb-2">Posted</h5>
+                        <p>{{ job.date_posted|date:"F d, Y" }}</p>
+                    </div>
+                </div>
+
+                {% if job.employer.website or job.employer.linkedin %}
+                <h3 class="section-title mt-4">Company Links</h3>
+                <div class="company-links">
+                    {% if job.employer.website %}
+                    <a href="{{ job.employer.website }}" target="_blank" class="btn btn-outline-primary w-100 mb-2">
+                        <i class="bi bi-globe"></i> Website
+                    </a>
+                    {% endif %}
+                    {% if job.employer.linkedin %}
+                    <a href="{{ job.employer.linkedin }}" target="_blank" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-linkedin"></i> LinkedIn
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if similar_jobs %}
+    <div class="similar-jobs">
+        <h3 class="section-title">Similar Jobs</h3>
+        <div class="row">
+            {% for similar_job in similar_jobs %}
+            <div class="col-md-6">
+                <div class="similar-job-card">
+                    <h4 class="similar-job-title">
+                        <a href="{% url 'job_detail' similar_job.id %}">{{ similar_job.title }}</a>
+                    </h4>
+                    <p class="similar-job-company">{{ similar_job.employer.company_name }}</p>
+                    <div class="d-flex gap-2 mb-2">
+                        <span class="badge bg-primary">{{ similar_job.get_job_type_display }}</span>
+                        <span class="badge bg-success">{{ similar_job.salary }}</span>
+                    </div>
+                    <p class="text-muted small">{{ similar_job.description|truncatechars:100 }}</p>
+                    <a href="{% url 'job_detail' similar_job.id %}" class="btn btn-sm btn-outline-primary">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

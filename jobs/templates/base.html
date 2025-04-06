@@ -1,0 +1,400 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}JobConnect | Find Your Dream Career{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Modern Navbar Styles */
+        .navbar {
+            padding: 15px 0;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+
+        .navbar-brand span {
+            color: var(--primary);
+        }
+
+        .navbar-nav {
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link {
+            color: #555;
+            font-weight: 500;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            margin: 0 5px;
+            border-radius: 8px;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
+        /* Modern Footer Styles */
+        .footer {
+            background-color: #0a1931;
+            color: #f8f9fa;
+            padding: 60px 0 30px;
+            margin-top: auto;
+        }
+
+        .footer h5 {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer h5::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px;
+        }
+
+        .footer .about-section p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 25px;
+        }
+
+        .footer .btn-contact {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .footer .btn-contact:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+        }
+
+        .footer .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .footer .social-icons a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer .contact-info {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer .contact-info i {
+            margin-right: 10px;
+            color: var(--primary);
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .footer .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer .footer-links i {
+            margin-right: 8px;
+            color: var(--primary);
+            width: 20px;
+            text-align: center;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .footer .col-md-4 {
+                margin-bottom: 30px;
+            }
+
+            .navbar-nav {
+                margin-top: 1rem;
+            }
+
+            /* Align hamburger menu links to the left */
+            .navbar-collapse {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #ffffff; /* Ensure background color is set */
+                z-index: 1000;
+                display: none;
+            }
+
+            .navbar-collapse.show {
+                display: block;
+            }
+
+            .navbar-nav {
+                flex-direction: column;
+                align-items: flex-start; /* Align to the left */
+            }
+
+            .nav-item {
+                margin: 0;
+                width: 100%;
+                text-align: left; /* Align text within the link to the left */
+            }
+
+            .nav-link {
+                display: block;
+                padding: 10px 15px;
+                border-bottom: 1px solid #eee;
+            }
+        }
+    </style>
+</head>
+<bod>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a href="{% url 'home' %}" class="navbar-brand">Job<span>Connect</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'job_list' %}" class="nav-link {% if request.resolver_match.url_name == 'job_list' %}active{% endif %}">
+                            <i class="fas fa-briefcase me-1"></i> Jobs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                            <i class="fas fa-info-circle me-1"></i> About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                            <i class="fas fa-envelope me-1"></i> Contact
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        {% if user.employer %}
+                        <li class="nav-item">
+                            <a href="{% url 'employer_dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'employer_dashboard' %}active{% endif %}">
+                                <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                            </a>
+                        </li>
+                        {% elif user.jobseeker %}
+                        <li class="nav-item">
+                            <a href="{% url 'jobseeker_dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'jobseeker_dashboard' %}active{% endif %}">
+                                <i class="fas fa-user-circle me-1"></i> Dashboard
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link" style="border: none; background: none; padding: 0;">
+                                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" id="registerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-plus me-1"></i> Register
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="registerDropdown">
+                                <li><a href="{% url 'employer_register' %}" class="dropdown-item"><i class="fas fa-building me-2"></i> Employer</a></li>
+                                <li><a href="{% url 'jobseeker_register' %}" class="dropdown-item"><i class="fas fa-user me-2"></i> Jobseeker</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-sign-in-alt me-1"></i> Login
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
+                                <li><a href="{% url 'employer_login' %}" class="dropdown-item"><i class="fas fa-building me-2"></i> As Employer</a></li>
+                                <li><a href="{% url 'jobseeker_login' %}" class="dropdown-item"><i class="fas fa-user me-2"></i> As Jobseeker</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1">
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {% if message.tags == 'success' %}<i class="fas fa-check-circle me-2"></i>{% endif %}
+                    {% if message.tags == 'info' %}<i class="fas fa-info-circle me-2"></i>{% endif %}
+                    {% if message.tags == 'warning' %}<i class="fas fa-exclamation-circle me-2"></i>{% endif %}
+                    {% if message.tags == 'danger' %}<i class="fas fa-times-circle me-2"></i>{% endif %}
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 about-section">
+                    <h5>About JobConnect</h5>
+                    <p>Connecting talented professionals with companies looking for their skills. We help transform careers and businesses.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="{% url 'job_list' %}"><i class="fas fa-chevron-right"></i> Browse Jobs</a></li>
+                        <li><a href="{% url 'about' %}"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="{% url 'contact' %}"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-envelope"></i> info@jobconnect.com</li>
+                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Job Street, Tech City</li>
+                    </ul>
+                    <a href="{% url 'contact' %}" class="btn btn-contact mt-3">
+                        <i class="fas fa-paper-plane me-2"></i> Get in Touch
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="mb-0">&copy; 2023 JobConnect. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</bod
+</html>

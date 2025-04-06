@@ -1,0 +1,438 @@
+/* Custom modern styles */
+:root {
+    --primary-color: #3a86ff;
+    --primary-dark: #2667cc;
+    --secondary-color: #ff9e00;
+    --light-gray: #f8f9fa;
+    --dark-gray: #343a40;
+    --transition: all 0.3s ease;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --border-radius: 12px;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Hero section */
+.bg-gradient {
+    background: linear-gradient(135deg, var(--primary-color), #4361ee);
+    color: white;
+    padding: 5rem 0 8rem;
+    position: relative;
+}
+
+.hero-image {
+    max-width: 90%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+
+.text-white-75 {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.hero-shape-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+/* Search box */
+.search-container {
+    margin-top: -2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.search-box {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+}
+
+.search-icon {
+    padding: 0 0.75rem;
+    color: #6c757d;
+}
+
+/* Section titles */
+.section-title {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+/* Job cards */
+.job-card {
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border: none;
+    background: white;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.company-logo {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 8px;
+}
+
+.job-title {
+    font-weight: 600;
+}
+
+.job-tags {
+    gap: 0.5rem;
+}
+
+.job-type, .job-salary {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: rgba(58, 134, 255, 0.1);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    color: var(--primary-color);
+}
+
+.job-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.job-link:hover {
+    color: var(--primary-dark);
+}
+
+/* Process cards */
+.process-card {
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    background: white;
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    height: 100%;
+    transition: var(--transition);
+}
+
+.process-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.process-icon {
+    position: relative;
+    margin: 0 auto 1.5rem;
+    width: 70px;
+    height: 70px;
+}
+
+.icon-circle {
+    width: 100%;
+    height: 100%;
+    background: rgba(58, 134, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+}
+
+.step-number {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Stat cards */
+.stat-card {
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    background: white;
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--dark-gray);
+}
+
+.stat-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    opacity: 0.1;
+    color: var(--primary-color);
+}
+
+/* Testimonial cards */
+.testimonial-card {
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    background: white;
+    box-shadow: var(--card-shadow);
+    height: 100%;
+    transition: var(--transition);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.quote-icon {
+    color: var(--primary-color);
+    opacity: 0.2;
+    margin-bottom: 1rem;
+}
+
+.testimonial-text {
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    color: #555;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+}
+
+.author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(58, 134, 255, 0.1);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.author-name {
+    font-weight: 600;
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+
+.author-role {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+/* CTA card */
+.cta-card {
+    padding: 3rem;
+    border-radius: var(--border-radius);
+    background: linear-gradient(135deg, var(--primary-color), #4361ee);
+    box-shadow: var(--card-shadow);
+    color: white;
+}
+
+.cta-title {
+    font-weight: 700;
+}
+
+.cta-text {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Empty state */
+.empty-state {
+    padding: 3rem;
+    color: #6c757d;
+    text-align: center;
+}
+
+/* Animation durations */
+.animate__animated {
+    animation-duration: 0.8s;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 991.98px) {
+    .hero-section {
+        padding: 4rem 0 6rem;
+        text-align: center;
+    }
+    
+    .hero-content {
+        margin-bottom: 3rem;
+    }
+    
+    .d-flex.gap-3 {
+        justify-content: center;
+    }
+    
+    .search-box form {
+        flex-direction: column;
+    }
+    
+    .search-box .form-control {
+        margin-bottom: 1rem;
+    }
+    
+    .search-box button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    h1.display-4 {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .job-card {
+        padding: 1.25rem;
+    }
+    
+    .job-meta {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .d-flex.job-tags {
+        margin-bottom: 0.5rem;
+    }
+    
+    .process-card, .stat-card, .testimonial-card {
+        padding: 1.5rem;
+    }
+    
+    .stat-value {
+        font-size: 2.5rem;
+    }
+    
+    .cta-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .hero-section {
+        padding: 3rem 0 5rem;
+    }
+    
+    h1.display-4 {
+        font-size: 2rem;
+    }
+    
+    p.lead {
+        font-size: 1rem;
+    }
+    
+    .btn-lg {
+        padding: 0.5rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .job-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .company-logo {
+        margin-bottom: 1rem;
+    }
+    
+    .testimonial-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animations - ensure they run smoothly on mobile */
+@media (prefers-reduced-motion: reduce) {
+    .animate__animated {
+        animation-duration: 0.001s !important;
+        transition-duration: 0.001s !important;
+    }
+    
+    .job-card:hover, .process-card:hover, .stat-card:hover, .testimonial-card:hover {
+        transform: none;
+    }
+}
+
+/* Dark mode compatibility */
+@media (prefers-color-scheme: dark) {
+    body.dark-mode {
+        background-color: #121212;
+        color: #e4e4e4;
+    }
+    
+    body.dark-mode .job-card,
+    body.dark-mode .process-card,
+    body.dark-mode .stat-card,
+    body.dark-mode .testimonial-card,
+    body.dark-mode .search-box {
+        background-color: #1e1e1e;
+        color: #e4e4e4;
+    }
+    
+    body.dark-mode .text-muted,
+    body.dark-mode .company-name {
+        color: #aaaaaa !important;
+    }
+}

@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Jobseeker Dashboard | JobConnect{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary: #007bff; /* Updated primary color */
+        --primary-dark: #0056b3;
+        --secondary: #6c757d;
+        --light: #f8f9fa;
+        --dark: #343a40;
+        --success: #28a745;
+        --info: #17a2b8;
+        --warning: #ffc107;
+        --danger: #dc3545;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+        color: var(--dark);
+        line-height: 1.6;
+        background-color: var(--light);
+    }
+
+    .dashboard-container {
+        padding: 2rem;
+        background-color: #f0f2f5; /* Light background */
+        min-height: 80vh;
+    }
+
+    .dashboard-card {
+        background-color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08);
+        margin-bottom: 1.5rem;
+    }
+
+    .dashboard-card-header {
+        padding: 1rem 1.5rem;
+        background-color: #e9ecef;
+        border-bottom: 1px solid #dee2e6;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+
+    .dashboard-card-header h5 {
+        color: var(--success);
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+
+    .dashboard-card-body {
+        padding: 1.5rem;
+    }
+
+    .dashboard-info {
+        margin-bottom: 1rem;
+    }
+
+    .dashboard-actions a {
+        margin-right: 1rem;
+        text-decoration: none;
+        color: var(--primary);
+        font-weight: 500;
+    }
+
+    .dashboard-actions a:hover {
+        color: var(--primary-dark);
+    }
+
+    .application-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .application-list-item {
+        padding: 1rem 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .application-list-item:last-child {
+        border-bottom: none;
+    }
+
+    .application-title {
+        font-weight: bold;
+        color: var(--dark);
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .application-meta {
+        color: var(--secondary);
+        font-size: 0.9rem;
+    }
+
+    .no-applications {
+        color: var(--secondary);
+        font-style: italic;
+    }
+</style>
+
+<div class="dashboard-container">
+    <h1>Jobseeker Dashboard</h1>
+
+    <div class="dashboard-card">
+        <div class="dashboard-card-header">
+            <h5>Welcome, {% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %}{{ request.user.username }}{% endif %}!</h5>
+        </div>
+        <div class="dashboard-card-body">
+            <div class="dashboard-info">
+                {% if total_applications %}
+                    <p>You have applied for a total of <strong>{{ total_applications }}</strong> jobs.</p>
+                {% else %}
+                    <p>You haven't applied for any jobs yet.</p>
+                {% endif %}
+            </div>
+            <div class="dashboard-actions">
+                <a href="{% url 'update_jobseeker_profile' %}">Update Profile</a>
+                <a href="{% url 'jobseeker_applications' %}">View All Applications</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="dashboard-card-header">
+            <h5>Recent Job Applications</h5>
+        </div>
+        <div class="dashboard-card-body">
+            {% if applications %}
+                <ul class="application-list">
+                    {% for application in applications %}
+                        <li class="application-list-item">
+                            <span class="application-title">{{ application.job.title }}</span>
+                            <span class="application-meta">Applied on: {{ application.date_applied|date:"F j, Y" }}</span>
+                            <span class="application-meta">Status: {{ application.get_status_display }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-applications">No recent job applications.</p>
+            {% endif %}
+            {% if total_applications > 5 %}
+                <div class="mt-3 text-center">
+                    <a href="{% url 'jobseeker_applications' %}">View All Applications</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="dashboard-card-header">
+            <h5>Recent Jobs You Might Be Interested In</h5>
+        </div>
+        <div class="dashboard-card-body">
+            {% if recent_jobs %}
+                <ul>
+                    {% for job in recent_jobs %}
+                        <li><a href="{% url 'job_detail' job_id=job.id %}">{{ job.title }}</a> ({{ job.employer.company_name }})</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No recent jobs available.</p>
+            {% endif %}
+        </div>
+    </div>
+    <form id="deleteJobseekerForm" method="post" action="{% url 'delete_jobseeker_profile' %}" onsubmit="return confirmDelete('job seeker profile');">
+        {% csrf_token %}
+        <p class="text-danger">Warning: This action is irreversible. Are you sure you want to delete your job seeker profile and your entire account?</p>
+        <button type="submit" class="btn btn-danger">Delete Profile</button>
+    </form>
+</div>
+<script>
+function confirmDelete(profileType) {
+    return window.confirm(`Are you sure you want to permanently delete your ${profileType}? This action cannot be undone.`);
+}
+</script>
+{% endblock %}

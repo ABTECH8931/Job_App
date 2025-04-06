@@ -1,0 +1,445 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Browse Jobs - JobConnect{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary: #4361ee;
+        --primary-light: #e0e7ff;
+        --primary-dark: #3a0ca3;
+        --secondary: #f72585;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --gray: #6c757d;
+        --light-gray: #e9ecef;
+        --white: #ffffff;
+        --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        --card-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --border-radius: 8px;
+        --transition-duration: 0.2s;
+        --transition-easing: ease-in-out;
+    }
+
+    /* Base Styles (Inherited from base.html) */
+
+    .container {
+        max-width: 1200px;
+    }
+
+    h1 {
+        font-weight: 700;
+        margin: 2rem 0 1.5rem;
+        color: var(--dark);
+        text-align: center; /* Center the title */
+    }
+
+    /* Modern Search Section */
+    .search-section {
+        background-color: var(--primary-light);
+        padding: 3rem 20px;
+        margin-bottom: 2rem;
+        border-radius: 12px;
+    }
+
+    .search-container {
+        background-color: var(--white);
+        border-radius: 10px;
+        box-shadow: var(--card-shadow);
+        padding: 2rem;
+    }
+
+    .search-form-modern {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Increased minmax for better layout */
+        gap: 15px;
+        align-items: center;
+    }
+
+    .search-form-modern .form-group {
+        margin-bottom: 0; /* Remove default margin */
+        position: relative; /* For icon positioning */
+    }
+
+    .search-form-modern .form-control,
+    .search-form-modern .form-select {
+        width: 100%;
+        padding: 1rem;
+        /* padding-left: 2.5rem; Space for the search icon */ /* Removed this line */
+        border: 1px solid var(--light-gray);
+        border-radius: var(--border-radius); /* Added border-radius here */
+        font-size: 1rem;
+        transition: border-color var(--transition-duration) var(--transition-easing),
+                    box-shadow var(--transition-duration) var(--transition-easing);
+    }
+
+    .search-form-modern .form-control:focus,
+    .search-form-modern .form-select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+    }
+
+    .search-form-modern .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray);
+    }
+
+    .search-form-modern .btn-primary {
+        grid-column: 1 / -1; /* Make the button span full width on smaller screens */
+        padding: 1rem 1.5rem;
+        border: none;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color var(--transition-duration) var(--transition-easing),
+                    box-shadow var(--transition-duration) var(--transition-easing);
+        background-color: var(--primary);
+        color: var(--white);
+    }
+
+    .search-form-modern .btn-primary:hover {
+        background-color: var(--primary-dark);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-form-modern .btn-primary:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.5);
+    }
+
+    /* Filter Card (Adjusted) */
+    .filter-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: var(--card-shadow);
+        margin-bottom: 1.5rem;
+        background-color: var(--white);
+    }
+
+    .filter-card .card-header {
+        background-color: transparent;
+        border-bottom: 1px solid var(--light-gray);
+        padding: 1.25rem 1.5rem;
+        font-weight: 600;
+    }
+
+    .filter-card .card-body {
+        padding: 1.5rem;
+    }
+
+    .filter-card h6 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--gray);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem; /* Reduced margin */
+    }
+
+    .filter-card .form-check {
+        margin-bottom: 0.6rem; /* Reduced margin */
+    }
+
+    .filter-card .form-check-input {
+        margin-top: 0.2rem;
+    }
+
+    .filter-card .form-select {
+        padding: 0.75rem 1rem; /* Slightly reduced padding */
+        border-radius: var(--border-radius);
+    }
+
+    .filter-card .btn-primary {
+        width: 100%;
+        padding: 0.8rem 1.2rem;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        background-color: var(--primary);
+        color: var(--white);
+        border: none;
+        cursor: pointer;
+        transition: background-color var(--transition-duration) var(--transition-easing);
+    }
+
+    .filter-card .btn-primary:hover {
+        background-color: var(--primary-dark);
+    }
+
+    /* Job Cards (No significant changes needed here based on request) */
+    .job-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: var(--card-shadow);
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+        background-color: var(--white);
+        overflow: hidden;
+    }
+
+    .job-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--card-shadow-hover);
+    }
+
+    .job-card .card-body {
+        padding: 1.75rem;
+    }
+
+    .job-card .card-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .job-card .card-title a {
+        color: var(--dark);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .job-card .card-title a:hover {
+        color: var(--primary);
+    }
+
+    .job-card .card-subtitle {
+        color: var(--gray);
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+
+    .job-card .card-text {
+        color: var(--gray);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .job-card .badge {
+        font-weight: 500;
+        padding: 0.5rem 0.75rem;
+        border-radius: 50px;
+        background-color: var(--primary-light);
+        color: var(--primary);
+    }
+
+    .job-card .text-muted {
+        font-size: 0.85rem;
+    }
+
+    .job-card .btn-outline-primary {
+        border-radius: var(--border-radius);
+        padding: 0.5rem 1.25rem;
+        font-weight: 500;
+    }
+
+    /* Pagination (No significant changes needed) */
+    .pagination {
+        margin-top: 2rem;
+    }
+
+    .page-item .page-link {
+        border: none;
+        color: var(--gray);
+        font-weight: 500;
+        margin: 0 0.25rem;
+        border-radius: var(--border-radius) !important;
+    }
+
+    .page-item.active .page-link {
+        background-color: var(--primary);
+        color: var(--white);
+    }
+
+    .page-item:not(.active) .page-link:hover {
+        background-color: var(--light-gray);
+        color: var(--dark);
+    }
+
+    /* Empty State (No significant changes needed) */
+    .card .card-body.text-center {
+        padding: 3rem;
+    }
+
+    .card .card-body.text-center h5 {
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .card .card-body.text-center .text-muted {
+        font-size: 1rem;
+    }
+
+    /* Responsive Adjustments for Search Section */
+    @media (max-width: 768px) {
+        .search-section {
+            padding: 2rem 15px;
+        }
+
+        .search-container {
+            padding: 1.5rem;
+        }
+
+        .search-form-modern {
+            grid-template-columns: 1fr; /* Stack form elements on smaller screens */
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 992px) {
+        .search-form-modern {
+            grid-template-columns: repeat(2, 1fr); /* Two columns on medium screens */
+        }
+
+        .search-form-modern .btn-primary {
+            grid-column: 1 / -1; /* Full width button */
+        }
+    }
+</style>
+
+<div class="container">
+    <h1>Browse Jobs</h1>
+
+    <div class="search-section">
+        <div class="search-container">
+            <form action="{% url 'job_list' %}" method="get" class="search-form-modern">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.search }}
+                    </div>
+                <div class="form-group">
+                    {{ form.location }}
+                </div>
+                <div class="form-group">
+                    {{ form.job_type }}
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search me-2"></i> Search Jobs
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="filter-card card">
+                <div class="card-header">
+                    <h5 class="mb-0">Filters</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'job_list' %}" method="get">
+                        <h6 class="mb-3">Categories</h6>
+                        <div class="mb-4">
+                            {% comment %}
+                            {% for category in categories %}
+                            <div class="form-check mb-2">
+                                <input type="checkbox" name="category" class="form-check-input"
+                                       value="{{ category.id }}" id="category{{ category.id }}"
+                                       {% if category.id|stringformat:'i' in request.GET.getlist|default:'' %}checked{% endif %}>
+                                <label for="category{{ category.id }}" class="form-check-label">
+                                    {{ category.name }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                            {% endcomment %}
+                            <p class="text-muted">Categories filter logic needs to be implemented in the view.</p>
+                        </div>
+
+                        <h6 class="mb-3">Salary Range</h6>
+                        <div class="mb-4">
+                            <select name="salary_range" class="form-select">
+                                <option value="">Any Salary</option>
+                                <option value="0-50000" {% if request.GET.salary_range == "0-50000" %}selected{% endif %}>$0 - $50,000</option>
+                                <option value="50000-100000" {% if request.GET.salary_range == "50000-100000" %}selected{% endif %}>$50,000 - $100,000</option>
+                                <option value="100000+" {% if request.GET.salary_range == "100000+" %}selected{% endif %}>$100,000+</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            {% if page_obj %}
+                {% for job in page_obj %}
+                <div class="job-card card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5 class="card-title mb-2">
+                                    <a href="{% url 'job_detail' job.id %}">{{ job.title }}</a>
+                                </h5>
+                                <h6 class="card-subtitle mb-3">{{ job.employer.company_name }}</h6>
+                                <p class="card-text">{{ job.description|truncatechars:150 }}</p>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <div class="mb-3">
+                                    <span class="badge">{{ job.salary }}</span>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Posted {{ job.date_posted|timesince }} ago</small>
+                                </div>
+                                <a href="{% url 'job_detail' job.id %}" class="btn btn-outline-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="page-link">&laquo; First</a>
+                        </li>
+                        <li class="page-item">
+                            <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="page-link">Previous</a>
+                        </li>
+                        {% endif %}
+                        {% if page_obj.paginator.num_pages > 1 %}
+                            {% for i in page_obj.paginator.page_range %}
+                            <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                                <a href="?page={{ i }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="page-link">{{ i }}</a>
+                            </li>
+                            {% endfor %}
+                        {% else %}
+                        <li class="page-item active">
+                            <span class="page-link">1 of 1</span>
+                        </li>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="page-link">Next</a>
+                        </li>
+                        <li class="page-item">
+                            <a href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="page-link">Last &raquo;</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% else %}
+                <div class="card">
+                    <div class="card-body text-center py-5">
+                        <h5 class="mb-3">No jobs found matching your criteria</h5>
+                        <p class="text-muted mb-4">Try adjusting your search or filters to find more results.</p>
+                        <a href="{% url 'job_list' %}" class="btn btn-primary">Clear Filters</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<br>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // You might need JavaScript to enhance the search functionality
+    // For example, to handle real-time search suggestions (if implemented)
+    // Add your custom JavaScript here if needed.
+</script>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Post a New Job | JobConnect{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary: #007bff; /* Updated primary color */
+        --primary-dark: #0056b3;
+        --secondary: #6c757d;
+        --light: #f8f9fa;
+        --dark: #343a40;
+        --success: #28a745;
+        --info: #17a2b8;
+        --warning: #ffc107;
+        --danger: #dc3545;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+        color: var(--dark);
+        line-height: 1.6;
+        background-color: var(--light);
+    }
+
+    .create-job-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh; /* Adjust as needed */
+        background-color: #f0f2f5; /* Light background */
+        padding: 2rem;
+    }
+
+    .create-job-card {
+        width: 100%;
+        max-width: 600px; /* Increased max-width for job creation form */
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08);
+    }
+
+    .create-job-card-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .create-job-card-header h2 {
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: var(--primary);
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .btn-primary {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+        color: #fff;
+        background-color: var(--primary-dark);
+        border-color: var(--primary-dark);
+    }
+
+    .mt-3 {
+        margin-top: 1.5rem;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .back-to-dashboard {
+        margin-top: 1rem;
+        text-align: center;
+    }
+
+    .back-to-dashboard a {
+        text-decoration: none;
+        color: var(--secondary);
+        font-weight: 500;
+    }
+
+    .back-to-dashboard a:hover {
+        color: var(--dark);
+    }
+</style>
+
+<div class="create-job-container">
+    <div class="create-job-card">
+        <div class="create-job-card-header">
+            <h2>Post a New Job</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">Post Job</button>
+            </form>
+            <div class="back-to-dashboard mt-3">
+                <a href="{% url 'employer_dashboard' %}">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

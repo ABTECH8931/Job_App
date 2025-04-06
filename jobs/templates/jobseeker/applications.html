@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Applications | JobConnect{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary: #007bff; /* Updated primary color */
+        --primary-dark: #0056b3;
+        --secondary: #6c757d;
+        --light: #f8f9fa;
+        --dark: #343a40;
+        --success: #28a745;
+        --info: #17a2b8;
+        --warning: #ffc107;
+        --danger: #dc3545;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+        color: var(--dark);
+        line-height: 1.6;
+        background-color: var(--light);
+    }
+
+    .applications-container {
+        padding: 1rem; /* Reduced padding for mobile */
+        background-color: #f0f2f5; /* Light background */
+        min-height: 80vh;
+    }
+
+    .applications-card {
+        background-color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08);
+        margin-bottom: 1rem; /* Reduced margin for mobile */
+        padding: 1rem; /* Reduced padding for mobile */
+    }
+
+    .applications-card-header {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .applications-card-header h2 {
+        color: var(--success);
+        font-weight: 600;
+    }
+
+    .application-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .application-item {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        flex-direction: column; /* Stack elements on mobile */
+        gap: 0.5rem;
+    }
+
+    .application-item:last-child {
+        border-bottom: none;
+    }
+
+    .job-title-link {
+        font-weight: bold;
+        color: var(--primary);
+        text-decoration: none;
+        display: block;
+    }
+
+    .job-title-link:hover {
+        text-decoration: underline;
+    }
+
+    .company-name {
+        color: var(--secondary);
+        font-size: 0.9rem;
+    }
+
+    .application-meta {
+        color: var(--info);
+        font-size: 0.8rem;
+    }
+
+    .no-applications {
+        color: var(--secondary);
+        font-style: italic;
+    }
+
+    /* Media query for larger screens (min-width: 768px) */
+    @media (min-width: 768px) {
+        .applications-container {
+            padding: 2rem;
+        }
+
+        .applications-card {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .applications-card-header {
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .application-item {
+            flex-direction: row; /* Display elements in a row on larger screens */
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .job-info {
+            flex-grow: 1;
+        }
+
+        .application-meta-status {
+            text-align: right;
+        }
+    }
+</style>
+
+<div class="applications-container">
+    <div class="applications-card">
+        <div class="applications-card-header">
+            <h2>My Job Applications</h2>
+        </div>
+        <div class="card-body">
+            {% if applications %}
+                <ul class="application-list">
+                    {% for application in applications %}
+                        <li class="application-item">
+                            <div class="job-info">
+                                <a href="{% url 'job_detail' application.job.id %}" class="job-title-link">{{ application.job.title }}</a>
+                                <p class="company-name">{{ application.job.employer.company_name }}</p>
+                                <p class="application-meta">Applied on: {{ application.date_applied|date:"F j, Y" }}</p>
+                            </div>
+                            <div class="application-meta-status">
+                                <span class="application-meta">Status: {{ application.get_status_display }}</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-applications">You haven't applied for any jobs yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
