@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-&yv0*7d%xq*^wx4sv6d@n5q7nq68p5icksskoe&1r!f1kms7do
 DEBUG = False
 CSRF_TRUSTED_ORIGINS = ['https://job-app-8rny.onrender.com']
 
-ALLOWED_HOSTS = ['job-app-8rny.onrender.com]
+ALLOWED_HOSTS = ['job-app-8rny.onrender.com']
 
 if os.environ.get('RENDER_EXTERNAL_HOSTNAME'):
     ALLOWED_HOSTS.append(os.environ['RENDER_EXTERNAL_HOSTNAME'])
